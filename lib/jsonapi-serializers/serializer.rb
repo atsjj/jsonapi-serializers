@@ -68,11 +68,11 @@ module JSONAPI
         "/#{type}/#{id}"
       end
 
-      def relationship_self_link(attribute_name)
+      def relationship_self_link(attribute_name, object)
         "#{self_link}/relationships/#{format_name(attribute_name)}"
       end
 
-      def relationship_related_link(attribute_name)
+      def relationship_related_link(attribute_name, object)
         "#{self_link}/#{format_name(attribute_name)}"
       end
 
@@ -88,8 +88,8 @@ module JSONAPI
           formatted_attribute_name = format_name(attribute_name)
           data[formatted_attribute_name] = {
             'links' => {
-              'self' => relationship_self_link(attribute_name),
-              'related' => relationship_related_link(attribute_name),
+              'self' => relationship_self_link(attribute_name, object),
+              'related' => relationship_related_link(attribute_name, object),
             },
           }
           if @_include_linkages.include?(formatted_attribute_name)
@@ -115,8 +115,8 @@ module JSONAPI
           formatted_attribute_name = format_name(attribute_name)
           data[formatted_attribute_name] = {
             'links' => {
-              'self' => relationship_self_link(attribute_name),
-              'related' => relationship_related_link(attribute_name),
+              'self' => relationship_self_link(attribute_name, objects),
+              'related' => relationship_related_link(attribute_name, objects),
             },
           }
           # Spec: Resource linkage MUST be represented as one of the following:
